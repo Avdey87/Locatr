@@ -1,10 +1,10 @@
 package com.aavdeev.locatr;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
-import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,20 +17,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.SupportMapFragment;
 
 import java.io.IOException;
 import java.util.List;
 
-public class LocatrFragment extends Fragment {
-    private ImageView mImageView;
+public class LocatrFragment extends SupportMapFragment {
     private GoogleApiClient mClient;
     private static final String TAG = "LocatrFragment";
+    private ProgressBar mProgressBar;
 
     public static LocatrFragment newInstance() {
         return new LocatrFragment();
@@ -57,13 +58,6 @@ public class LocatrFragment extends Fragment {
                 .build();
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_locatr, container, false);
-        mImageView = (ImageView) v.findViewById(R.id.image);
-        return v;
-    }
 
     @Override
     public void onStart() {
@@ -129,7 +123,7 @@ public class LocatrFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Void result) {
-            mImageView.setImageBitmap(mBitmap);
+           
         }
     }
 
