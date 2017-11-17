@@ -32,6 +32,10 @@ public class LocatrFragment extends SupportMapFragment {
     private GoogleApiClient mClient;
     private static final String TAG = "LocatrFragment";
     private ProgressBar mProgressBar;
+    private Bitmap mMapImage;
+    private GalleryItem mMapItem;
+    private Location mCurrentLocation;
+
 
     public static LocatrFragment newInstance() {
         return new LocatrFragment();
@@ -101,10 +105,12 @@ public class LocatrFragment extends SupportMapFragment {
     private class SearchTask extends AsyncTask<Location, Void, Void> {
         private GalleryItem mGalleryItem;
         private Bitmap mBitmap;
+        private Location mLocation;
 
 
         @Override
         protected Void doInBackground(Location... params) {
+            mLocation = params[0];
             FlickrFetchr fetchr = new FlickrFetchr();
             List<GalleryItem> items = fetchr.searchPhotos(params[0]);
             if (items.size() == 0) {
@@ -123,7 +129,9 @@ public class LocatrFragment extends SupportMapFragment {
 
         @Override
         protected void onPostExecute(Void result) {
-           
+            mMapImage = mBitmap;
+            mMapItem = mGalleryItem;
+            mCurrentLocation = mLocation;
         }
     }
 
